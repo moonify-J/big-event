@@ -1,11 +1,11 @@
 package cn.moonify.service;
 
+import cn.moonify.pojo.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
-@Service
 public interface UserService {
-    String findByUserName(String username);
+    User findByUserName(String username);
 
     void register(String username, String password);
 }

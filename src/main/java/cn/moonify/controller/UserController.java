@@ -1,6 +1,7 @@
 package cn.moonify.controller;
 
 import cn.moonify.pojo.Result;
+import cn.moonify.pojo.User;
 import cn.moonify.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,7 @@ public class UserController {
     @PostMapping("/register")
     public Result register(String username, String password){
         // 查询用户
-        String u = userService.findByUserName(username);
+        User u = userService.findByUserName(username);
                 if(u == null){
                     // 用户不存在，注册
                     userService.register(username, password);

@@ -2,6 +2,7 @@ package cn.moonify;
 
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.junit.jupiter.api.Test;
@@ -33,9 +34,14 @@ public class JwtTest {
                 ".Y-h8Bl3iIMGarMRhcwUhEhYyCjBod_oKml5Iszw32iE";
         JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256("moonify")).build();
 
-        DecodedJWT decodedJWT = jwtVerifier.verify(token);
-        Map<String, Claim> claims = decodedJWT.getClaims();
-        System.out.println(claims.get("user"));
+        try {
+            DecodedJWT decodedJWT = jwtVerifier.verify(token);
+            Map<String, Claim> claims = decodedJWT.getClaims();
+            System.out.println(claims.get("user"));
+        } catch (JWTVerificationException e) {
+            // 令牌验证未通过
+            System.out.println("令牌验证未通过");
+        }
 
     }
 }

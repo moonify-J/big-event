@@ -1,5 +1,6 @@
 package cn.moonify.controller;
 
+import cn.moonify.Utils.JwtUtil;
 import cn.moonify.pojo.Result;
 import cn.moonify.pojo.User;
 import cn.moonify.service.UserService;
@@ -10,6 +11,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -42,8 +46,12 @@ public class UserController {
 
         // 判断密码是否正确
         if (loginUser.getPassword().equals(Md5Util.getMD5String(password))) {
-            // 正确则返回令牌
-            return Result.success("jwt token 令牌");
+            // 创建token并返回
+            Map<String, Object> claims = new HashMap<>();
+            claims.put("id", loginUser.getId());
+            claims.put("username", loginUser.getUsername());
+            String token = JwtUtil.genToken(claims);
+            return Result.success(token);
         } else {
             // 密码错误
             return Result.error("密码错误");

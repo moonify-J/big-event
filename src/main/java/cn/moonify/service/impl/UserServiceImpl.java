@@ -1,6 +1,6 @@
 package cn.moonify.service.impl;
 
-import cn.moonify.Utils.Md5Util;
+import cn.moonify.utils.Md5Util;
 import cn.moonify.mapper.UserMapper;
 import cn.moonify.pojo.User;
 import cn.moonify.service.UserService;
@@ -25,9 +25,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void register(String username, String password) {
         String md5String = Md5Util.getMD5String(password);
-        if(findByUserName(username) == null) {
+        if (findByUserName(username) == null) {
             mapper.add(username, md5String);
         }
 
     }
+
 }

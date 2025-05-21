@@ -1,4 +1,4 @@
-package cn.moonify.Utils;
+package cn.moonify.utils;
 
 
 import java.security.MessageDigest;

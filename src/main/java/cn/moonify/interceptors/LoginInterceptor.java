@@ -1,6 +1,7 @@
 package cn.moonify.interceptors;
 
 import cn.moonify.Utils.JwtUtil;
+import cn.moonify.utils.ThreadLocalUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         String token = request.getHeader("Authorization");
         try {
             Map<String, Object> claims = JwtUtil.parseToken(token);
+            ThreadLocalUtil.setUsername(claims.get("username").toString());
             return true;
         } catch (Exception e) {
             // 令牌验证未通过

@@ -5,6 +5,7 @@ import cn.moonify.pojo.Result;
 import cn.moonify.pojo.User;
 import cn.moonify.service.UserService;
 import cn.moonify.utils.Md5Util;
+import cn.moonify.utils.ThreadLocalUtil;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -58,11 +59,8 @@ public class UserController {
     }
 
     @GetMapping("/userInfo")
-    public Result<User> userInfo(@RequestHeader(name = "Authorization") String token) {
-        Map<String, Object> claims = JwtUtil.parseToken(token);
-        String username = (String) claims.get("username");
-
-        User user = userService.findByUserName(username);
+    public Result<User> userInfo() {
+        User user = userService.findByUserName(ThreadLocalUtil.getUsername());
         return Result.success(user);
     }
 
